@@ -53,7 +53,8 @@ insert into zaposlen ( Konobar_idKonobar , Kafic_idKafic ) values
 insert into Rezervacije ( idRezervacije, datum, vreme, brLjudi, Korisnik_idKorisnik, Kafic_idKafic ) values
     (1, '2017-12-21', '18:00', 5, 1, 1 ),
     (2, '2017-12-22', '19:00', 3, 2, 2 ),
-    (3, '2017-12-19', '19:00', 4, 3, 2 )
+    (3, '2017-12-19', '19:00', 4, 3, 2 ),
+    (4, '2017-12-20', '20:00', 3, 3, 2 )
 ;
 
 
