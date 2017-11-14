@@ -3,7 +3,11 @@ CFLAGS	= -Wall -Wextra
 CCLIBS	= -lmysqlclient
 PROGRAM	= rezervacijaKafica
 OBJ		= 			\
-		app.o
+		app.o		\
+		util.o		\
+		korisnik.o	\
+		konobar.o
+
 
 VPATH	= src
 

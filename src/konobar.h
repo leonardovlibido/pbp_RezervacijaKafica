@@ -1,5 +1,5 @@
-#ifndef APP_H
-#define APP_H
+#ifndef KONOBAR_H
+#define KONOBAR_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,8 +11,9 @@
 #include <string.h>
 
 #include "util.h"
-#include "korisnik.h"
-#include "konobar.h"
+
+int prijaviKonobara( MYSQL *connection );
+void konobarAkcije( MYSQL *connection, int idKonobara );
 
 #endif
 

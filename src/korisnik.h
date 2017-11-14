@@ -1,5 +1,5 @@
-#ifndef APP_H
-#define APP_H
+#ifndef KORISNIK_H
+#define KORISNIK_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,8 +11,9 @@
 #include <string.h>
 
 #include "util.h"
-#include "korisnik.h"
-#include "konobar.h"
+
+int prijaviKorisnika( MYSQL *connection );
+void korisnikAkcije( MYSQL *connection, int idKorisnika );
 
 #endif
 
