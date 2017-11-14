@@ -4,4 +4,6 @@
 #include <mysql/mysql.h>
 #include <stdarg.h>
 #include <errno.h>
+#include <unistd.h>
+#include <string.h>
 
