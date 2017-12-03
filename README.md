@@ -17,7 +17,7 @@ Kafic se moze **oceniti** od strane korisnika. Korisnik moze oceniti nijedan ili
 
 ---
 
-##Trigeri nad bazom
+## Trigeri nad bazom
 
 - azuriranjeOcena:
   Nakon unosa ocene korisnika za odredjeni kafic, azurira se ocena kafica, koja predstavlja srednju vrednost svih ocena kafica.
@@ -25,7 +25,7 @@ Kafic se moze **oceniti** od strane korisnika. Korisnik moze oceniti nijedan ili
   Nakon unosenja nove rezervacije menja se trenutno stanje stola koji je dodeljen rezervaciji, kao i ukupan broj rezervisanih i ukupan broj slobodnih stolova datog kafica.
 
 ---
-##Entiteti
+## Entiteti
 
 - Nezavisni entiteti:
     - Kafici
