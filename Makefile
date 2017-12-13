@@ -8,7 +8,7 @@ DEPS	=
 		korisnik.h	\
 		konobar.h	
 
-OBJ		= 			\
+OBJ		=
 		app.o		\
 		util.o		\
 		korisnik.o	\
