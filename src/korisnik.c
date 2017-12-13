@@ -87,20 +87,23 @@ void korisnikAkcije( MYSQL *connection, int idKorisnika )
 			    printf("Dovidjenja.\n");
 				break;
 			case 1:
+			    titleScreen();
                 izlistajKafice(connection);
-                pressEnterToContinue();
+                pressAnyKeyToContinue();
 				break;
 			case 2:
+			    titleScreen();
                 rezervisiKafic(connection, idKorisnika);
-                pressEnterToContinue();
+                pressAnyKeyToContinue();
 				break;
 			case 3:
-                oceniKafic(connection, idKorisnikaj);
-                pressEnterToContinue();
+			    titleScreen();
+                oceniKafic(connection, idKorisnika);
+                pressAnyKeyToContinue();
 				break;
             default:
                 printf("Los ulaz. Unesite redni broj opcije koju zelite da izaberete\n");
-                pressEnterToContinue();
+                pressAnyKeyToContinue();
                 break;
 		}
     }
@@ -113,8 +116,8 @@ void izlistajKafice( MYSQL *connection)
     char query[QUERY_SIZE];
     /* Formulise se upit kojim se izlistavaju svi kafici sa slobodnim mestima. */
     sprintf (query,
-            "select ime, ulica, brojUlice, radnoVremeRadniDan, radnoVremeVikend \
-                    ukupanBrStolova, brSlobodnihStolova, ocena \
+            "select idKafic, ime, ulica, brojUlice, radnoVremeRadniDan, radnoVremeVikend \
+                    brSlobodnihStolova, ocena \
             from Kafic \
             where brSlobodnihStolova > 0");
 
@@ -123,7 +126,7 @@ void izlistajKafice( MYSQL *connection)
         error_fatal ("Error in query %s\n", mysql_error (connection));
 
     /* Preuzima se result. */
-    result = mysql_use_result (connection);
+    result = mysql_store_result (connection);
     print_result(result, 0);
     mysql_free_result (result);
 }
@@ -140,22 +143,23 @@ void rezervisiKafic( MYSQL *connection, int idKorisnika)
 
     printf("Izaberite neki od kafica sa slobodnim stolovima:\n");
     izlistajKafice(connection);
-    printf("Unesite id Kafica zelite da ocenite:\n");
+    printf("Unesite id Kafica koji zelite da rezervisete:\n");
 	printPrompt();
     scanf("%d", &idKafica);
     // TODO provera da li postoji kafic sa tim id-em
-    printf("Unesite datum za koji zelite da rezervisete mesto: (YYYY-MM-DD)");
+    printf("Unesite datum za koji zelite da rezervisete mesto: (YYYY-MM-DD)\n");
 	printPrompt();
     scanf("%s", bufferDatum);
-    printf("Unesite vreme: (HH:SS)");
+    printf("Unesite vreme: (HH:SS)\n");
 	printPrompt();
     scanf("%s", bufferVreme);
-    printf("Unesite broj ljudi koji ce doci:");
+    printf("Unesite broj ljudi koji ce doci:\n");
 	printPrompt();
     scanf("%d", &brLjudi);
 
-    sprintf (query, "
-            insert into Rezervacije ( datum, vreme, brLjudi, Korisnik_idKorisnik,\
+    // TODO ubaci da je ovo autoincrement
+    sprintf (query,
+            "insert into Rezervacije ( datum, vreme, brLjudi, Korisnik_idKorisnik,\
                         Kafic_idKafic ) values \
             ( %s, %s, %d, %d, %d )",
             bufferDatum, bufferVreme, brLjudi, idKorisnika, idKafica);
@@ -169,12 +173,13 @@ void rezervisiKafic( MYSQL *connection, int idKorisnika)
 void oceniKafic( MYSQL *connection, int idKorisnika )
 {
     MYSQL_RES *result;
+    MYSQL_ROW row;
 
     char query[QUERY_SIZE];
     int idKafica;
     int ocena;
 
-    sprintf( query, "select ime, ulica, brojUlice from Kafic");
+    sprintf( query, "select idKafic, ime, ulica, brojUlice from Kafic");
     if (mysql_query (connection, query) != 0){
         error_fatal ("error in query %s\n", mysql_error (connection));
     }
@@ -192,6 +197,7 @@ void oceniKafic( MYSQL *connection, int idKorisnika )
     }
     result = mysql_use_result (connection);
     row = mysql_fetch_row(result);
+    mysql_free_result (result);
 
     printf("Koliko zvezdica zelite da date kaficu?\n");
 	printPrompt();
@@ -199,8 +205,8 @@ void oceniKafic( MYSQL *connection, int idKorisnika )
 
     if (row == 0){
         // mora da se unese ocena
-        sprintf( query, "
-                insert into Ocena ( Korisnik_idKorisnik, Kafic_idKafic, brZvezdica) values\
+        sprintf( query,
+                "insert into Ocena ( Korisnik_idKorisnik, Kafic_idKafic, brZvezdica) values\
                 ( %d, %d, %d )", idKorisnika, idKafica, ocena);
         if (mysql_query (connection, query) != 0){
             error_fatal ("Error in query %s\n", mysql_error (connection));
@@ -212,7 +218,7 @@ void oceniKafic( MYSQL *connection, int idKorisnika )
         // mora da se azurira ocena
         sprintf( query,
                 "update Ocena \
-                set ocena = %d \
+                set brZvezdica = %d \
                 where Korisnik_idKorisnik = %d and Kafic_idKafic = %d",
                 ocena, idKorisnika, idKafica);
         if (mysql_query (connection, query) != 0){
@@ -222,6 +228,6 @@ void oceniKafic( MYSQL *connection, int idKorisnika )
         //TODO check if query did what it shoudl
     }
     titleScreen();
-    printf("Uspesno ste uneli ocenu %d", ocena);
+    printf("Uspesno ste uneli ocenu %d.\n", ocena);
 }
 

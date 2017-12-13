@@ -3,12 +3,12 @@ CFLAGS	= -Wall -Wextra
 CCLIBS	= -lmysqlclient
 PROGRAM	= rezervacijaKafica
 
-DEPS	=
+DEPS	=			\
 		util.h		\
 		korisnik.h	\
 		konobar.h	
 
-OBJ		=
+OBJ		=			\
 		app.o		\
 		util.o		\
 		korisnik.o	\
@@ -31,7 +31,7 @@ insert:
 	mysql -u root --password= -D mysql <src/insert.sql
 
 
-%.o: %.c
+%.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CCFLAGS)
 
 $(PROGRAM): $(OBJ)

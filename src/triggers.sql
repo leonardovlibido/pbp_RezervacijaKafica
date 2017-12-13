@@ -16,6 +16,19 @@ end $$
 
 
 
+drop trigger if exists azuriraj_ocene_update $$
+
+create trigger azuriraj_ocene_update after update on Ocena
+for each row begin
+    update Kafic set ocena = (
+        select avg(brZvezdica)
+        from Ocena
+        where Ocena.Kafic_idKafic = Kafic.idKafic
+    );
+end $$
+
+
+
 drop trigger if exists azuriranje_statusa_rezervacije $$
 
 create trigger azuriranje_statusa_rezervacije after insert on Odobrava
