@@ -2,14 +2,20 @@ CC		= gcc
 CFLAGS	= -Wall -Wextra
 CCLIBS	= -lmysqlclient
 PROGRAM	= rezervacijaKafica
+
+DEPS	=
+		util.h		\
+		korisnik.h	\
+		konobar.h	
+
 OBJ		= 			\
 		app.o		\
 		util.o		\
 		korisnik.o	\
 		konobar.o
 
-
 VPATH	= src
+
 
 .PHONY: all create insert
 
