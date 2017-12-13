@@ -41,9 +41,51 @@ void titleScreen()
 	write(STDOUT_FILENO, FRAME0, 80);
 }
 
+
 void printPrompt()
 {
 	const char *PROMPT = ">> ";
 	write(STDOUT_FILENO, PROMPT, 3);
 }
 
+void pressEnterToContinue()
+{
+    printf("Press Enter to Continue\n");
+    printPrompt()
+    while( getchar() != '\n' );
+}
+
+void print_result(MYSQL_RES *result, int mark_order)
+{
+    MYSQL_FIELD *field;
+    MYSQL_ROW row;
+
+    row = mysql_fetch_row(result);
+    if (row == 0){
+        printf("Wrong username or pass\n");
+        return;
+    }
+
+    if (mark_order){
+        printf("%-13s|", "place");
+    }
+    while( NULL != (field = mysql_fetch_field(result))){
+        printf("%-13s|", field->name);
+    }
+    printf("\n");
+    int num_fields = mysql_num_fields(result);
+
+    int i=0;
+    while ((row = mysql_fetch_row(result)) ){
+        // unsigned long *lengths = mysql_fetch_lengths(result);
+        if (mark_order){
+            printf("%-13d|", ++i);
+        }
+        for (int i=0; i<num_fields; i++){
+            printf ("%-13s|", row[i] ? row[i] : "NULL");
+        }
+        printf ("\n");
+    }
+
+    printf ("\n");
+}
