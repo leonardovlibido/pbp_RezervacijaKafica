@@ -36,7 +36,7 @@ insert into Sto ( redniBroj, trenutnoStanje, brojMesta, Kafic_idKafic) values
 
 insert into Ocena ( Korisnik_idKorisnik, Kafic_idKafic, brZvezdica) values
     ( 1, 1, 4 ),
-    ( 1, 2, 5 ),
+--    ( 1, 2, 5 ),
     ( 2, 1, 3 ),
     ( 2, 2, 5 ),
     ( 3, 2, 4 )
@@ -50,11 +50,11 @@ insert into zaposlen ( Konobar_idKonobar , Kafic_idKafic ) values
 ;
 
 
-insert into Rezervacije ( idRezervacije, datum, vreme, brLjudi, Korisnik_idKorisnik, Kafic_idKafic ) values
-    (1, '2017-12-21', '18:00', 5, 1, 1 ),
-    (2, '2017-12-22', '19:00', 3, 2, 2 ),
-    (3, '2017-12-19', '19:00', 4, 3, 2 ),
-    (4, '2017-12-20', '20:00', 3, 3, 2 )
+insert into Rezervacije ( datum, vreme, brLjudi, Korisnik_idKorisnik, Kafic_idKafic ) values
+    ( '2017-12-21', '18:00', 5, 1, 1 ),
+    ( '2017-12-22', '19:00', 3, 2, 2 ),
+    ( '2017-12-19', '19:00', 4, 3, 2 ),
+    ( '2017-12-20', '20:00', 3, 3, 2 )
 ;
 
 

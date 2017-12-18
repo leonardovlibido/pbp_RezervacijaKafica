@@ -12,6 +12,7 @@ void error_fatal(char *format, ...);
 
 /* Funkcija titleScreen brise trenutni sadzraj sa ekrana u terminalu zbog lepseg prikaza */
 void titleScreen();
+void titleScreen2();
 void printPrompt();
 void pressAnyKeyToContinue();
 void print_result(MYSQL_RES *result, int mark_order);

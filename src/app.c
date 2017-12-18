@@ -34,7 +34,7 @@ int main (int argc, char **argv)
 	int idKonobara = -1;
 
     while ( izabranTipKorisnika ){
-		titleScreen();
+		titleScreen2();
         printf("\nIzaberite kao koji korisnik zelite da se ulogujete (unesite redni broj opcije ):\n");
         printf("0. Izadji\n");
         printf("1. Korisnik\n");

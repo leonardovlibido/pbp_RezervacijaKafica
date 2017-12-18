@@ -3,6 +3,29 @@ use RezervacijaKafica;
 delimiter $$
 
 
+
+drop trigger if exists ocena_check_interval_insert $$
+
+create trigger ocena_check_interval_insert before insert on Ocena
+for each row begin
+    if new.brZvezdica > 5 or new.brZvezdica < 1 then
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Los broj zvezdica';
+    end if;
+end $$
+
+
+
+drop trigger if exists ocena_check_interval_update $$
+
+create trigger ocena_check_interval_update before update on Ocena
+for each row begin
+    if new.brZvezdica > 5 or new.brZvezdica < 1 then
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Los broj zvezdica';
+    end if;
+end $$
+        
+
+
 drop trigger if exists azuriraj_ocene $$
 
 create trigger azuriraj_ocene after insert on Ocena

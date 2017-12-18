@@ -40,6 +40,19 @@ void titleScreen()
 	write(STDOUT_FILENO, FRAME1, 80);
 	write(STDOUT_FILENO, FRAME0, 80);
 }
+void titleScreen2()
+{
+	const char *CLEAR_SCREEN_ANSI = "\e[1;1H\e[2J";
+	write(STDOUT_FILENO, CLEAR_SCREEN_ANSI, 12);
+    const char *title =
+"   ___                                _   _        __ __     ____         \n\
+  / _ \\___ ___ ___ _____  _____ _____(_) (_)__ _  / //_/__ _/ _(_)______ _\n\
+ / , _/ -_)_ // -_) __/ |/ / _ `/ __/ / / / _ `/ / ,< / _ `/ _/ / __/ _ `/\n\
+/_/|_|\\__//__/\\__/_/  |___/\\_,_/\\__/_/_/ /\\_,_/ /_/|_|\\_,_/_//_/\\__/\\_,_/ \n\
+                                    |___/                                 \n";
+    write(STDOUT_FILENO, title, 75*5);
+
+}
 
 
 void printPrompt()
@@ -51,8 +64,9 @@ void printPrompt()
 void pressAnyKeyToContinue()
 {
     char garbage[BUFFER_SIZE];
-    printf("Press Any Key to Continue\n");
-    scanf("%s", garbage);
+    printf("\nKliknite enter da biste nastavili. ");
+    fgets(garbage,100,stdin);
+    fgets(garbage,100,stdin);
 }
 
 void print_result(MYSQL_RES *result, int mark_order)
