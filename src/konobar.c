@@ -116,6 +116,11 @@ void konobarAkcije( MYSQL *connection, int idKonobara )
                 obradiRezervacijuNaCekanju(connection, idKonobara, idKafica);
                 pressAnyKeyToContinue();
 				break;
+            case 5:
+                titleScreen();
+                promeniStatusRezervacija(connection, idKonobara, idKafica);
+                pressAnyKeyToContinue();
+				break;
             default:
                 printf("Los ulaz. Unesite redni broj opcije koju zelite da izaberete\n");
                 break;
@@ -222,6 +227,16 @@ void obradiRezervacijuNaCekanju( MYSQL *connection, int idKonobara, int idKafica
         scanf("%s", &chooseTable);
     }
 
+    // sprintf (query, "insert into table Odobrava ( Rezervacije_idRezervacije, Konobar_idKonobar ) values (%d, %d)", idRezervacije, idKonobar);
+    //check if lepo uneto
+    // 
+
     return;
 }
+
+void promeniStatusRezervacija( MYSQL *connection, int idKonobara, int idKafica)
+{
+
+}
+
 
