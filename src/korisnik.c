@@ -175,7 +175,7 @@ void rezervisiKafic( MYSQL *connection, int idKorisnika)
     printf("Unesite id Kafica koji zelite da rezervisete:\n");
 	printPrompt();
     scanf("%d", &idKafica);
-    // TODO provera da li postoji kafic sa tim id-em
+    // todo provera da li postoji kafic sa tim id-em
     printf("Unesite datum za koji zelite da rezervisete mesto: (YYYY-MM-DD)\n");
 	printPrompt();
     scanf("%s", bufferDatum);
@@ -225,7 +225,7 @@ void oceniKafic( MYSQL *connection, int idKorisnika )
 
 	printPrompt();
     scanf("%d", &idKafica);
-    //TODO: dal treba ovde provera dal kafic postoji, ili je ok samo da puknem
+    //todo: dal treba ovde provera dal kafic postoji, ili je ok samo da puknem
 
     sprintf( query, "select * from Ocena where Korisnik_idKorisnik = %d and Kafic_idKafic=%d", idKorisnika, idKafica);
     if (mysql_query (connection, query) != 0){
@@ -248,7 +248,7 @@ void oceniKafic( MYSQL *connection, int idKorisnika )
             error_fatal ("Error in query %s\n", mysql_error (connection));
         }
         //result = mysql_store_result (connection);
-        // TODO check if query did what it shoudl
+        // todo check if query did what it shoudl
     }
     else{
         // mora da se azurira ocena
@@ -261,7 +261,7 @@ void oceniKafic( MYSQL *connection, int idKorisnika )
             error_fatal ("Error in query %s\n", mysql_error (connection));
         }
         //result = mysql_store_result (connection);
-        //TODO check if query did what it shoudl
+        //todo check if query did what it shoudl
     }
     titleScreen();
     if (mysql_affected_rows(connection) == 0){

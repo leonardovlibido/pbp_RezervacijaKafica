@@ -88,5 +88,18 @@ for each row begin
 end $$
 
 
-delimiter ;
+drop trigger if exists azuriranje_stanja_stolova2 $$
 
+create trigger azuriranje_stanja_stolova2 before delete on biraSto
+for each row begin
+    update Kafic set
+        brSlobodnihStolova = brSlobodnihStolova + 1,
+        brZauzetihStolova = brZauzetihStolova + 1
+        where old.Sto_Kafic_idKafic = Kafic.idKafic;
+    update Sto set
+        trenutnoStanje = 'slobodno'
+        where old.Sto_Kafic_idKafic = Sto.Kafic_idKafic and old.Sto_redniBroj = Sto.redniBroj;
+end $$
+
+
+delimiter ;

@@ -9,6 +9,8 @@
 
 #include "util.h"
 
+#define COOL_SCREEN
+
 
 void error_fatal(char *format, ...)
 {
@@ -26,6 +28,12 @@ void error_fatal(char *format, ...)
 
 void titleScreen()
 {
+#ifdef COOL_SCREEN
+    titleScreen2();
+    printf("\n");
+    return;
+#endif
+
 	const char *CLEAR_SCREEN_ANSI = "\e[1;1H\e[2J";
 	write(STDOUT_FILENO, CLEAR_SCREEN_ANSI, 12);
 	const char *FRAME0 = "                                                                               \n";
@@ -57,8 +65,8 @@ void titleScreen2()
 
 void printPrompt()
 {
-	const char *PROMPT = ">> ";
-	write(STDOUT_FILENO, PROMPT, 3);
+	const char *PROMPT = "\n>> ";
+	write(STDOUT_FILENO, PROMPT, 4);
 }
 
 void pressAnyKeyToContinue()
@@ -73,6 +81,8 @@ void print_result(MYSQL_RES *result, int mark_order)
 {
     MYSQL_FIELD *field;
     MYSQL_ROW row;
+    char garbage[1000];
+    garbage[0]='\0';
 
     if (mark_order){
         printf("%-19s|", "place");

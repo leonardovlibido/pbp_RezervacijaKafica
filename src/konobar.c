@@ -64,7 +64,7 @@ int prijaviKonobara( MYSQL *connection )
 			idKonobara = atoi(row[0]);
 			// printf("Ovo je id konobara: %d\n", idKorisnika);
 		}
-		mysql_free_result (result); //TODO dal ovo treba ovako?
+		mysql_free_result (result); //todo dal ovo treba ovako?
 	}
 	return idKonobara;
 }
@@ -86,7 +86,7 @@ void konobarAkcije( MYSQL *connection, int idKonobara )
         printf("2. Izlistaj rezervacije na cekanju.\n");
         printf("3. Izlistaj slobodne stolove.\n");
         printf("4. Obradi rezervaciju na cekanju.\n");
-        printf("5. Promeni status rezervacija koje su bile danas.\n");
+        //printf("5. Promeni status rezervacija koje su bile danas.\n");
 		printPrompt();
         scanf("%d", &running);
 		switch ( running ){
@@ -102,7 +102,7 @@ void konobarAkcije( MYSQL *connection, int idKonobara )
 				break;
 			case 2:
                 titleScreen();
-                izlistajRezervacijePoKaficu(connection, idKonobara);
+                izlistajRezervacijePoKaficu(connection, idKafica);
                 pressAnyKeyToContinue();
 				break;
             case 3:
@@ -155,6 +155,8 @@ int izaberiKafic( MYSQL *connection, int idKonobara)
 	printPrompt();
     scanf("%d", &idKafica);
 
+    //todo provera da li Konobar radi u Kaficu kojem odgovara idKafica
+    return idKafica;
 }
 
 
@@ -206,7 +208,7 @@ void obradiRezervacijuNaCekanju( MYSQL *connection, int idKonobara, int idKafica
 {
     MYSQL_RES *result;
     char query[QUERY_SIZE];
-    int idRezervacije;
+    int idRezervacije, idSto;
 
     izlistajRezervacijePoKaficu( connection, idKafica);
 
@@ -214,22 +216,40 @@ void obradiRezervacijuNaCekanju( MYSQL *connection, int idKonobara, int idKafica
     printPrompt();
     scanf("%d", &idRezervacije);
 
-    char chooseTable[QUERY_SIZE];
-    chooseTable[0] = 'y';
+    sprintf (query, "insert into Odobrava ( Rezervacije_idRezervacije, Konobar_idKonobar ) values (%d, %d)", idRezervacije, idKonobara);
 
+    if (mysql_query (connection, query) != 0){
+        error_fatal ("Greska u upitu: %s\n", mysql_error (connection));
+    }
+    //mysql_free_result (result);
+
+    izlistajSlobodneStolove(connection, idKafica);
+
+    printf("Izaberite koji sto zelite da rezervisete(unesite redniBroj stola):\n");
+    scanf("%d", &idSto);
+    sprintf ( query, "insert into biraSto ( Odobrava_Rezervacije_idRezervacije, Sto_redniBroj, Sto_Kafic_idKafic ) values ( %d, %d, %d )", idRezervacije, idSto, idKafica);
+    
+    if (mysql_query (connection, query) != 0){
+        error_fatal ("Greska u upitu: %s\n", mysql_error (connection));
+    }
+    //mysql_free_result (result);
+
+    printf("Uspesno ste rezervisali sto\n");
+
+    //char chooseTable[QUERY_SIZE];
+    //chooseTable[0] = 'y';
+
+    /*
     while(chooseTable[0] == 'y' || chooseTable[0] =='Y'){
         izlistajSlobodneStolove(connection, idKafica);
         printf("Izaberite koji sto zelite da rezervisete\n");
         printf("Uspesno ste rezervisali sto\n");
-        //TODO CODE
+        //todo CODE
         printf("Zelite li da rezervisete jos neki sto za datu rezervaciju?(Y/N)\n");
         printPrompt();
         scanf("%s", &chooseTable);
     }
-
-    // sprintf (query, "insert into table Odobrava ( Rezervacije_idRezervacije, Konobar_idKonobar ) values (%d, %d)", idRezervacije, idKonobar);
-    //check if lepo uneto
-    // 
+    */
 
     return;
 }
