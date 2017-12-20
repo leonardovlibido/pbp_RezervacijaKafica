@@ -209,17 +209,17 @@ void obradiRezervacijuNaCekanju( MYSQL *connection, int idKonobara, int idKafica
     printPrompt();
     scanf("%d", &idRezervacije);
 
-    char* chooseAnotherTable[QUERY_SIZE];
+    char chooseTable[QUERY_SIZE];
     chooseTable[0] = 'y';
 
     while(chooseTable[0] == 'y' || chooseTable[0] =='Y'){
-        izlistajSlobodneStolove();
+        izlistajSlobodneStolove(connection, idKafica);
         printf("Izaberite koji sto zelite da rezervisete\n");
         printf("Uspesno ste rezervisali sto\n");
         //TODO CODE
         printf("Zelite li da rezervisete jos neki sto za datu rezervaciju?(Y/N)\n");
         printPrompt();
-        scanf("%d", &chooseAnotherTable);
+        scanf("%s", &chooseTable);
     }
 
     return;
